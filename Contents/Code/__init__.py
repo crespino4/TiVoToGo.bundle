@@ -512,7 +512,12 @@ def downloadLocal(url, title, tagline):
     try:
         valid_chars = list("-_.() %s%s" % (string.ascii_letters, string.digits))
         title = ''.join(c for c in list(title) if c in valid_chars)
-        fileName = path.join(ttgdir, title + ".mpg")
+        if Prefs['tivolibre']:
+            url = url + "&Format=video/x-tivo-mpeg-ts"
+            fileName = path.join(ttgdir, title + ".ts")
+        else:
+            url = url + "&Format=video/x-tivo-mpeg"
+            fileName = path.join(ttgdir, title + ".mpg")
         jobs = copy.deepcopy(DL_QUEUE)
         do_dl = True
         while jobs:

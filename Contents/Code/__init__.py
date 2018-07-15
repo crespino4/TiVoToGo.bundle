@@ -512,7 +512,7 @@ def downloadLocal(url, title, tagline):
     try:
         valid_chars = list("-_.() %s%s" % (string.ascii_letters, string.digits))
         title = ''.join(c for c in list(title) if c in valid_chars)
-        if Prefs['tivolibre']:
+        if Prefs['tivolibre'] and Prefs['ts-downloads']:
             url = url + "&Format=video/x-tivo-mpeg-ts"
             fileName = path.join(ttgdir, title + ".ts")
         else:

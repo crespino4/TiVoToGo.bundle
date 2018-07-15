@@ -55,6 +55,12 @@
 		"default": "false"
 	},
 	{
+		"id": "ts-downloads",
+		"type": "bool",
+		"label": "Download TS (transport stream) files (requires tivolibre)",
+		"default": "false"
+	},
+	{
 		"id": "java_path",
 		"type": "text",
 		"default": "/usr/bin/java",

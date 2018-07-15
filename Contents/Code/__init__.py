@@ -658,7 +658,9 @@ def MainMenu():
         if tivoName == "":
             discoverTiVo(oc)
         else:
-            oc.add(DirectoryObject(key=Callback(getTivoShows, tivoName=tivoName, tivoip=tivoName), title=L(tivoName)))
+            tivoList = tivoName.replace(' ','').split(',')
+            for x in range (0, len(tivoList)) :
+                oc.add(DirectoryObject(key=Callback(getTivoShows, tivoName=tivoList[x], tivoip=tivoList[x]), title=L(tivoList[x])))
     global DownloadThread
     if DownloadThread:
         oc.add(DirectoryObject(key = Callback(getStatus, rand=str(Util.Random())), title = 'Active Downloads'))

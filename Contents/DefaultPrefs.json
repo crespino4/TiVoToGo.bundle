@@ -9,13 +9,13 @@
 		"id": "tivoStaticIP",
 		"type": "text",
 		"default": "",
-		"label": "TiVo IP address (leave blank for auto-discovery)"
+		"label": "Comma-separated list of TiVo IP addresses (leave blank for auto-discovery)"
 	},
 	{
 		"id": "browseblacklist",
 		"type": "text",
 		"default": "",
-		"label": "Comma-separated list of TiVo names to ignore"
+		"label": "Comma-separated list of TiVo names to ignore (for auto-discovery)"
 	},
 	{
 		"id": "togo",

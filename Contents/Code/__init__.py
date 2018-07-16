@@ -583,6 +583,7 @@ def discoverTiVo(oc):
                 tivo_names.remove(t)
             except:
                 pass
+    Log("%s TiVo(s) auto-discovered." % len(tivo_names))
 
     # Now get the addresses -- this is the slow part
     swversion = re.compile('(\d*.\d*)').findall
@@ -598,7 +599,11 @@ def discoverTiVo(oc):
                 url_path = s.getProperties()['path']
                 url = "%s://%s:%s%s" % (url_proto, addr, port, url_path)
                 Log("Found TiVo URL %s" % url)
-                oc.add(DirectoryObject(key=Callback(getTivoShows, tivoName=tivoName, url=url, tivoip=addr), title=L(tivoName)))
+                if len(tivo_names) == 1:
+                    # if only one TiVo was found, just list the contents
+                    getTivoShowsByIPURL(addr, url, oc)
+                else:
+                    oc.add(DirectoryObject(key=Callback(getTivoShows, tivoName=tivoName, url=url, tivoip=addr), title=L(tivoName)))
             except Exception, e:
                 Log("Error finding TiVo: %s" % e)
                 pass
@@ -659,8 +664,14 @@ def MainMenu():
             discoverTiVo(oc)
         else:
             tivoList = tivoName.replace(' ','').split(',')
-            for x in range (0, len(tivoList)) :
-                oc.add(DirectoryObject(key=Callback(getTivoShows, tivoName=tivoList[x], tivoip=tivoList[x]), title=L(tivoList[x])))
+            Log("%s TiVo(s) specified." % len(tivoList))
+            if len(tivoList) == 1:
+                # if only one TiVo is specified, just list the contents
+                url = "https://" + tivoList[0] + ":443" + TIVO_LIST_PATH
+                getTivoShowsByIPURL(tivoList[0], url, oc)
+            else:
+                for x in range (0, len(tivoList)) :
+                    oc.add(DirectoryObject(key=Callback(getTivoShows, tivoName=tivoList[x], tivoip=tivoList[x]), title=L(tivoList[x])))
     global DownloadThread
     if DownloadThread:
         oc.add(DirectoryObject(key = Callback(getStatus, rand=str(Util.Random())), title = 'Active Downloads'))

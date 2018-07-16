@@ -572,7 +572,7 @@ def discoverTiVo(oc):
     sleep(0.7)
 
     # For proxied TiVos, remove the original and any black listed tivos
-    browseblacklist = (Prefs['browseblacklist'] or "").split(",")
+    browseblacklist = map(str.lstrip, ((Prefs['browseblacklist'] or "").split(",")))
     for t in tivo_names[:]:
         if t.split(".")[0] in browseblacklist:
             tivo_names.remove(t)

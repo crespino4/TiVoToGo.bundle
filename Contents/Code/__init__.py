@@ -81,7 +81,7 @@ def getTivoShowsByIPURL(tivoip, url, dir):
         try:
             authhandler = urllib2.HTTPDigestAuthHandler()
             authhandler.add_password("TiVo DVR", "https://" + tivoip + ":443/", "tivo", getMyMAK())
-            ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+            ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
             opener = urllib2.build_opener(urllib2.HTTPSHandler(context=ssl_context), authhandler)
             pagehandle = opener.open(qurl)
         except IOError, e:
